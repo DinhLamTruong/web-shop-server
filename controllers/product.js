@@ -45,7 +45,7 @@ exports.getCategory = (req, res, next) => {
 exports.postAddProduct = (req, res, next) => {
   const files = req.files;
   const listImage = files.map(
-    file => `http://localhost:5000/uploads/${file.filename}`
+    file => `https://asm-njs03-server.onrender.com/uploads/${file.filename}`
   );
   const { name, category, price, longDescription, shortDescription, count } =
     req.body;
