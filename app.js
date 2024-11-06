@@ -9,7 +9,9 @@ require('dotenv').config();
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
-const Session = require('./models/session');
+// const Session = require('./models/session');
+// const { GridFsStorage } = require('multer-gridfs-storage');
+// const { GridFSBucket } = require('mongodb');
 
 const authRoute = require('./routes/auth');
 const productRoute = require('./routes/product');
