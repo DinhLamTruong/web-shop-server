@@ -27,6 +27,8 @@ app.use(
       'http://localhost:3000',
       'http://localhost:3001',
       'https://asm-njs03-server.onrender.com',
+      'https://asm-njs03-client.onrender.com',
+      'https://asm-njs03-admin.onrender.com',
     ],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     credentials: true,
