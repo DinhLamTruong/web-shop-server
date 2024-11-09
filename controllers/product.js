@@ -1,6 +1,6 @@
 const Product = require('../models/product');
 const mongoose = require('mongoose');
-const ObjectId = mongoose.Types.ObjectId;
+const { s3Uploadv3 } = require('../s3Service');
 
 // GET all products
 exports.getProducts = (req, res, next) => {
@@ -42,32 +42,41 @@ exports.getCategory = (req, res, next) => {
   }
 };
 
-exports.postAddProduct = (req, res, next) => {
-  const files = req.files;
-  const listImage = files.map(
-    file => `https://asm-njs03-server.onrender.com/uploads/${file.filename}`
-  );
+exports.postAddProduct = async (req, res, next) => {
   const { name, category, price, longDescription, shortDescription, count } =
     req.body;
 
-  const newProduct = new Product({
-    name,
-    category,
-    price: parseInt(price),
-    long_desc: longDescription,
-    short_desc: shortDescription,
-    count,
-    img1: listImage[0],
-    img2: listImage[1],
-    img3: listImage[2],
-    img4: listImage[3],
-    img5: listImage[4],
-  });
-  newProduct.save().then(result => {
-    res.status(200).json({
-      message: 'Product created successfully!',
+  try {
+    const uploadResults = await s3Uploadv3(req.files);
+
+    const imageUrls = uploadResults.map(result => result.imageUrl);
+
+    const newProduct = new Product({
+      name,
+      category,
+      price: parseInt(price),
+      long_desc: longDescription,
+      short_desc: shortDescription,
+      count,
+      img1: imageUrls[0],
+      img2: imageUrls[1],
+      img3: imageUrls[2],
+      img4: imageUrls[3],
+      img5: imageUrls[4] || null,
     });
-  });
+
+    await newProduct.save();
+
+    return res.status(200).json({
+      message: 'Files uploaded successfully',
+      files: uploadResults, // send URLs to frontend
+    });
+  } catch (err) {
+    console.log(err);
+    res
+      .status(500)
+      .json({ message: 'File upload or product creation failed', error: err });
+  }
 };
 
 exports.updateProduct = (req, res, next) => {
