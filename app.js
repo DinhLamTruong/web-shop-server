@@ -29,6 +29,8 @@ app.use(
       'https://asm-njs03-server.onrender.com',
       'https://asm-njs03-client.onrender.com',
       'https://asm-njs03-admin.onrender.com',
+      'https://asm-njs03-admin.vercel.app',
+      'https://asm-njs03-client.vercel.app',
     ],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     credentials: true,
