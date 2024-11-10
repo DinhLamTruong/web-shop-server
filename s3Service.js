@@ -2,8 +2,10 @@ const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 
 exports.s3Uploadv3 = async files => {
   const s3client = new S3Client({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    credentials: {
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    },
     region: process.env.AWS_REGION,
   });
 
