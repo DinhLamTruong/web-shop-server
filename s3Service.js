@@ -1,3 +1,4 @@
+const sharp = require('sharp');
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 
 exports.s3Uploadv3 = async files => {
@@ -11,11 +12,14 @@ exports.s3Uploadv3 = async files => {
 
   const uploadResults = await Promise.all(
     files.map(async file => {
+      const resizedImage = await sharp(file.buffer)
+        .resize({ width: 400, height: 400, fit: 'contain' })
+        .toBuffer();
       const key = `uploads/${Date.now()}-${file.originalname}`;
       const params = {
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: key,
-        Body: file.buffer,
+        Body: resizedImage,
         ContentType: file.mimetype, // Important for correct display
         ContentDisposition: 'inline', // Set to inline to open in new tab
       };
