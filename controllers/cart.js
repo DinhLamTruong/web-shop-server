@@ -9,6 +9,7 @@ exports.getCarts = (req, res, next) => {
     .populate('userId')
     .populate('items.productId')
     .then(cart => {
+      if (!cart) return res.status(404).json({ message: 'Not found cart!' });
       const userId = cart.userId;
 
       const arrCart = cart.items;
@@ -93,7 +94,7 @@ exports.putUpdateCart = (req, res, next) => {
 
 exports.deleteProduct = (req, res, next) => {
   const { idUser, idProduct } = req.query;
-  
+
   Cart.updateOne(
     { userId: idUser, 'items.productId': idProduct },
     { $pull: { items: { productId: idProduct } } }
