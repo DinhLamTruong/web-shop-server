@@ -3,20 +3,24 @@ const ChatMessage = require('../models/chatMessage');
 const chatRoom = require('../models/chatRoom');
 const Session = require('../models/session');
 
-// GET all room chat role === 'customer'
+// GET all room chat role === ['customer','consultant']
 exports.getAllRoom = (req, res, next) => {
   ChatRoom.find()
     .populate({
       path: 'users',
-      match: { role: 'customer' },
+      match: { role: { $in: ['customer', 'consultant'] } },
     })
     .then(rooms => {
-      const customerRooms = rooms.filter(room => room.users.length > 0);
+      const customerRooms = rooms.filter(
+        room => room.users && room.users.length > 0
+      );
       res.status(200).json(customerRooms);
     })
-    .catch(err => next(err));
+    .catch(err => {
+      console.error('Error fetching rooms:', err);
+      next(err);
+    });
 };
-
 
 exports.postCreateSession = async (req, res, next) => {
   try {
