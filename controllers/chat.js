@@ -3,12 +3,12 @@ const ChatMessage = require('../models/chatMessage');
 const chatRoom = require('../models/chatRoom');
 const Session = require('../models/session');
 
-// GET all room chat role === ['customer','consultant']
+// GET all room chat role === ['customer']
 exports.getAllRoom = (req, res, next) => {
   ChatRoom.find()
     .populate({
       path: 'users',
-      match: { role: { $in: ['customer', 'consultant'] } },
+      match: { role: { $in: ['customer'] } },
     })
     .then(rooms => {
       const customerRooms = rooms.filter(
