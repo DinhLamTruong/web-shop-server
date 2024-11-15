@@ -42,7 +42,9 @@ exports.login = (req, res, next) => {
             .status(200)
             .json({ details: { ...otherDetails } });
         } else {
-          return res.status(422).json('Invalid email or password!');
+          return res
+            .status(422)
+            .json({ message: 'Invalid email or password!' });
         }
       });
     })
