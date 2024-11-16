@@ -3,7 +3,6 @@ const { verifyToken } = require('../utils/veryfiToken');
 const route = express.Router();
 
 const productControllers = require('../controllers/product');
-const { verifyToken } = require('../utils/veryfiToken');
 
 route.get('/shop', productControllers.getCategory);
 
