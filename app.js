@@ -26,9 +26,8 @@ app.use(
     origin: [
       'http://localhost:3000',
       'http://localhost:3001',
-      'https://web-shop-server.onrender.com',
-      'https://asm-njs03-client.onrender.com',
-      'https://asm-njs03-admin.onrender.com',
+      'https://web-shop-client.onrender.com',
+      'https://web-shop-admin.onrender.com',
       'https://asm-njs03-admin.vercel.app',
       'https://asm-njs03-client.vercel.app',
     ],
