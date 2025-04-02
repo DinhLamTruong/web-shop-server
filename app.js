@@ -23,7 +23,12 @@ app.use((req, res, next) => {
 
 app.use(
   cors({
-    origin: '*',
+    origin: [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'https://web-shop-client.onrender.com',
+      'https://web-shop-admin.onrender.com',
+    ],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     credentials: true,
   })
