@@ -23,14 +23,7 @@ app.use((req, res, next) => {
 
 app.use(
   cors({
-    origin: [
-      'http://localhost:3000',
-      'http://localhost:3001',
-      'https://web-shop-client.onrender.com',
-      'https://web-shop-admin.onrender.com',
-      'https://asm-njs03-admin.vercel.app',
-      'https://asm-njs03-client.vercel.app',
-    ],
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     credentials: true,
   })
